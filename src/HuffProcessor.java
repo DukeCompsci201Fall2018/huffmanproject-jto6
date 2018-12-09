@@ -84,7 +84,6 @@ public class HuffProcessor {
 				pq.add(new HuffNode(i, counts[i]));
 			}
 		}
-		pq.add(new HuffNode(PSEUDO_EOF, 1));
 		while(pq.size() > 1) {
 			HuffNode left = pq.remove();
 			HuffNode right = pq.remove();
