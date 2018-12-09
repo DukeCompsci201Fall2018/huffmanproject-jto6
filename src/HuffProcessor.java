@@ -96,15 +96,15 @@ public class HuffProcessor {
 	private String[] makeCodingsFromTree(HuffNode root, String path, String[] encodings) {
 		HuffNode current = root;
 		if (current != null) {
-			if(current.myValue == 0) {
+			if(current.myLeft == null && current.myRight == null) {	//current.myValue == 0 was my old check and that misses the encoding for 0 oops
+				int leafVal = current.myValue;						//have to check for no children instead
+				encodings[leafVal] = path;
+			}
+			else {
 				String pathLeft = path + "0";
 				String pathRight = path + "1";
 				makeCodingsFromTree(current.myLeft, pathLeft, encodings);
 				makeCodingsFromTree(current.myRight, pathRight, encodings);
-			}
-			else {
-				int leafVal = current.myValue;
-				encodings[leafVal] = path;
 			}
 		}
 		return encodings;
