@@ -62,7 +62,7 @@ public class HuffProcessor {
 		out.close();*/
 	}
 	
-	public int[] readForCounts(BitInputStream in) {
+	private int[] readForCounts(BitInputStream in) {
 		int[] charCounts = new int[ALPH_SIZE + 1];
 		int charVal = 0;
 		while(true) {
@@ -75,7 +75,7 @@ public class HuffProcessor {
 		return charCounts;
 	}
 	
-	public HuffNode makeTreeFromCounts(int[] counts) {
+	private HuffNode makeTreeFromCounts(int[] counts) {
 		PriorityQueue<HuffNode> pq = new PriorityQueue<HuffNode>();
 		
 		for(int i = 0; i < counts.length; i++) {
@@ -93,7 +93,7 @@ public class HuffProcessor {
 		return pq.remove();
 	}
 	
-	public String[] makeCodingsFromTree(HuffNode root, String path, String[] encodings) {
+	private String[] makeCodingsFromTree(HuffNode root, String path, String[] encodings) {
 		HuffNode current = root;
 		if(current.myValue == 0) {
 			String pathLeft = path + "0";
@@ -108,7 +108,7 @@ public class HuffProcessor {
 		return encodings;
 	}
 	
-	public void writeHeader(HuffNode root, BitOutputStream out) {
+	private void writeHeader(HuffNode root, BitOutputStream out) {
 		HuffNode current = root;
 		if(current.myValue == 0) {
 			out.writeBits(1, 0);
@@ -121,7 +121,7 @@ public class HuffProcessor {
 		}
 	}
 	
-	public void writeCompressedBits(String[] encodings, BitInputStream in, BitOutputStream out) {
+	private void writeCompressedBits(String[] encodings, BitInputStream in, BitOutputStream out) {
 		while(true) {
 			int charVal = in.readBits(BITS_PER_WORD);
 			if (charVal != -1) {
@@ -162,7 +162,7 @@ public class HuffProcessor {
 		out.close();*/
 	}
 	
-	public HuffNode readTreeHeader(BitInputStream in) {
+	private HuffNode readTreeHeader(BitInputStream in) {
 		int current = in.readBits(1);
 		HuffNode node = null;
 		if (current == -1) {
@@ -182,7 +182,7 @@ public class HuffProcessor {
 		return null;
 	}
 	
-	public void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
+	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
 		HuffNode current = root;
 		while(true) {
 			int bits = in.readBits(1);
