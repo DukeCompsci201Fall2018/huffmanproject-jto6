@@ -72,6 +72,7 @@ public class HuffProcessor {
 			}
 			charCounts[charVal] = charCounts[charVal] + 1;
 		}
+		charCounts[PSEUDO_EOF] = 1;
 		return charCounts;
 	}
 
