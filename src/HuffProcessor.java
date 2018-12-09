@@ -174,14 +174,13 @@ public class HuffProcessor {
 		if(current == 0) {
 			HuffNode left = readTreeHeader(in);
 			HuffNode right = readTreeHeader(in);
-			node = new HuffNode(0, 0, left, right);
+			return node = new HuffNode(0, 0, left, right);
 		}
 		
 		else {
 			int val = in.readBits(BITS_PER_WORD + 1);
 			return new HuffNode(val, 0, null, null);
 		}
-		return node;
 	}
 	
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
@@ -198,13 +197,15 @@ public class HuffProcessor {
 				else {
 					current = current.myRight;
 				}
-				if (current.myValue != 0) {
-					if (current.myValue == PSEUDO_EOF) {
-						break;
-					}
-					else {
-						out.writeBits(BITS_PER_WORD, current.myValue);
-						current = root;
+				if(current.myLeft == null && current.myRight == null) {
+					if (current.myValue != 0) {
+						if (current.myValue == PSEUDO_EOF) {
+							break;
+						}
+						else {
+							out.writeBits(BITS_PER_WORD, current.myValue);
+							current = root;
+						}
 					}
 				}
 			}
