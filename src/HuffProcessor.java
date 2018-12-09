@@ -166,7 +166,6 @@ public class HuffProcessor {
 	
 	private HuffNode readTreeHeader(BitInputStream in) {
 		int current = in.readBits(1);
-		HuffNode node = null;
 		if (current == -1) {
 			throw new HuffException ("Tree contains nonvalue.");
 		}
@@ -174,7 +173,7 @@ public class HuffProcessor {
 		if(current == 0) {
 			HuffNode left = readTreeHeader(in);
 			HuffNode right = readTreeHeader(in);
-			return node = new HuffNode(0, 0, left, right);
+			return new HuffNode(0, 0, left, right);
 		}
 		
 		else {
@@ -198,14 +197,12 @@ public class HuffProcessor {
 					current = current.myRight;
 				}
 				if(current.myLeft == null && current.myRight == null) {
-					if (current.myValue != 0) {
-						if (current.myValue == PSEUDO_EOF) {
-							break;
-						}
-						else {
-							out.writeBits(BITS_PER_WORD, current.myValue);
-							current = root;
-						}
+					if (current.myValue == PSEUDO_EOF) {
+						break;
+					}
+					else {
+						out.writeBits(BITS_PER_WORD, current.myValue);
+						current = root;
 					}
 				}
 			}
