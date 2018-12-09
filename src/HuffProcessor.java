@@ -95,19 +95,23 @@ public class HuffProcessor {
 
 	private String[] makeCodingsFromTree(HuffNode root, String path, String[] encodings) {
 		HuffNode current = root;
-		if (current != null) {
-			if(current.myLeft == null && current.myRight == null) {	//current.myValue == 0 was my old check and that misses the encoding for 0 oops
-				int leafVal = current.myValue;						//have to check for no children instead of myValue
+		codingHelper(root, "", encodings);	//i need to learn how to read directions and include things they tell me to include
+		return encodings;
+	}
+	
+	private void codingHelper(HuffNode root, String path, String[] encodings) {
+		if (root != null) {
+			if(root.myLeft == null && root.myRight == null) {	//current.myValue == 0 was my old check and that misses the encoding for 0 oops
+				int leafVal = root.myValue;						//have to check for no children instead of myValue
 				encodings[leafVal] = path;
 			}
 			else {
 				String pathLeft = path + "0";
 				String pathRight = path + "1";
-				makeCodingsFromTree(current.myLeft, pathLeft, encodings);
-				makeCodingsFromTree(current.myRight, pathRight, encodings);
+				makeCodingsFromTree(root.myLeft, pathLeft, encodings);
+				makeCodingsFromTree(root.myRight, pathRight, encodings);
 			}
 		}
-		return encodings;
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
