@@ -97,7 +97,7 @@ public class HuffProcessor {
 		HuffNode current = root;
 		if (current != null) {
 			if(current.myLeft == null && current.myRight == null) {	//current.myValue == 0 was my old check and that misses the encoding for 0 oops
-				int leafVal = current.myValue;						//have to check for no children instead
+				int leafVal = current.myValue;						//have to check for no children instead of myValue
 				encodings[leafVal] = path;
 			}
 			else {
