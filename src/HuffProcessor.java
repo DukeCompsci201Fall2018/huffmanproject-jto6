@@ -145,7 +145,9 @@ public class HuffProcessor {
 	 *            Buffered bit stream writing to the output file.
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out){
+		System.out.println(HUFF_TREE);
 		int bits = in.readBits(BITS_PER_INT);
+		System.out.println(bits);
 		if (bits != HUFF_TREE) {
 				throw new HuffException ("illegal header starts with " + bits);
 		}
@@ -179,7 +181,7 @@ public class HuffProcessor {
 			int val = in.readBits(BITS_PER_WORD + 1);
 			return new HuffNode(val, 0, null, null);
 		}
-		return null;
+		return node;
 	}
 	
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
@@ -202,7 +204,7 @@ public class HuffProcessor {
 					}
 					else {
 						out.writeBits(BITS_PER_WORD, current.myValue);
-						
+						current = root;
 					}
 				}
 			}
