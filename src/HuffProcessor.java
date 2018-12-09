@@ -94,7 +94,6 @@ public class HuffProcessor {
 	}
 
 	private String[] makeCodingsFromTree(HuffNode root, String path, String[] encodings) {
-		HuffNode current = root;
 		codingHelper(root, "", encodings);	//i need to learn how to read directions and include things they tell me to include
 		return encodings;
 	}
@@ -108,8 +107,8 @@ public class HuffProcessor {
 			else {
 				String pathLeft = path + "0";
 				String pathRight = path + "1";
-				makeCodingsFromTree(root.myLeft, pathLeft, encodings);
-				makeCodingsFromTree(root.myRight, pathRight, encodings);
+				codingHelper(root.myLeft, pathLeft, encodings);
+				codingHelper(root.myRight, pathRight, encodings);
 			}
 		}
 	}
